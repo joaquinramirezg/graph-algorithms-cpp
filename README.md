@@ -76,7 +76,8 @@ BellmanFord<data_type, weight_type> bellman(graph, "A"); // Computes the Bellman
 
 FloydWarshall<data_type, weight_type> floyd(graph); // Computes the Floyd-Warshall algorithm
 
-AStar<char, int> astar(graph, "A", "Z", heuristic); // Shortest path under an admissible heuristic
+Astar<char, int> astar(graph, heuristicFn, distanceFn); // Takes a heuristic and a distance function
+UndirectedGraph<char, int> path = astar.UnDirectedApply("A", "Z"); // Shortest path between two vertices
 
 SCC<char, int> scc(graph); // Generates the strongly connected components of the graph (only for directed graphs)
 UndirectedGraph<char, int> result = bfs.apply(); // Returns a graph
@@ -84,7 +85,7 @@ UndirectedGraph<char, int> result = bfs.apply(); // Returns a graph
 
 ## JSON File Parser
 * Builds a graph after reading a JSON file which stores data on airports around the globe. The library used to parse the data is `rapidJSON`, vendored under `Parser/include/`.
-* `Parser/Data/airports.json` holds the global set; `pe.json` is the Peruvian subset. Each record carries IATA and ICAO codes, city, country, timezone and coordinates, so edge weights can be real great-circle distances instead of invented numbers.
+* `Parser/Data/airports.json` holds 3,266 airports worldwide; `pe.json` is an 18-airport Peruvian subset for quicker runs. Each record carries IATA and ICAO codes, city, country, timezone and coordinates, so edge weights can be real great-circle distances instead of invented numbers.
 * This is the reason the library is templated: the same algorithms that run on a five-vertex test graph run unchanged on the airport network.
 
 ## Tester
