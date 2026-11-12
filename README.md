@@ -8,6 +8,25 @@ Everything is header-only and templated on both the vertex data type and the
 edge weight type, so the same `Dijkstra` runs over `<char, int>` in a test and
 over `<Airport, double>` on real coordinates.
 
+| Problem | Algorithms |
+|---|---|
+| Shortest paths | Dijkstra, A*, Bellman-Ford, Floyd-Warshall |
+| Minimum spanning tree | Kruskal, Prim |
+| Traversal | BFS, DFS |
+| Structure | Strongly connected components, connectivity, density |
+
+## Build and run
+
+Header-only, so there is nothing to link. From the repository root:
+
+    g++ -std=c++17 -IGraph -IParser -IParser/include -o graph main.cpp
+    ./graph
+
+`main.cpp` ships with both demos commented out: uncomment
+`Tester::executeParser(file::airports);` to load the airport network and time
+the main algorithms on it, or `Tester::executeExamples();` to build a graph
+from the console.
+
 --------
 
 Developed in the Algorithms and Data Structures course at UTEC in November 2020.
@@ -41,7 +60,7 @@ bool isDense(float threshold = 0.5) const; // Calculates the density of the grap
 
 bool isConnected(); // Detects if the graph is connected
 
-bool isStronglyConnected() throw(); // Detects if the graph is strongly connected (only for directed graphs)
+bool isStronglyConnected(); // Detects if the graph is strongly connected (only for directed graphs)
 
 bool empty(); // Checks if the graph is empty
 
@@ -80,7 +99,7 @@ Astar<char, int> astar(graph, heuristicFn, distanceFn); // Takes a heuristic and
 UndirectedGraph<char, int> path = astar.UnDirectedApply("A", "Z"); // Shortest path between two vertices
 
 SCC<char, int> scc(graph); // Generates the strongly connected components of the graph (only for directed graphs)
-UndirectedGraph<char, int> result = bfs.apply(); // Returns a graph
+DirectedGraph<char, int> result = scc.apply(); // Returns a graph
 ```
 
 ## JSON File Parser
